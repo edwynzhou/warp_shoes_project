@@ -1,0 +1,28 @@
+#YunZhan_Zhou_zhouy407_1009948933
+#Alex_Mamoukarys_mamoukar_1010125703
+
+# Set tables
+table PM  "ODBC" "./WARP2011W.mdb" "Product_Master":
+	PM_product_num <- [Product_Num], PM_sales_price ~ Sales_Price;
+read table PM;
+
+table RM "ODBC" "./WARP2011W.mdb" "RM_Master":
+	RM_num <- [RM_Num], RM_cost ~ Cost, RM_s_quantity ~ S_Quantity;
+read table RM;
+
+table MM "ODBC" "./WARP2011W.mdb" "Machine_Master":
+	MM_machine_num <- [Machine_Num], MM_operating_cost_per_min ~ OpCost_per_min;
+read table MM;
+
+# Parameter tables
+table BOM "ODBC" "./WARP2011W.mdb" "BOM":
+	[Product_Num, RM_Num], BOM_quantity ~ Quantity;
+read table BOM;
+
+table MA "ODBC" "./WARP2011W.mdb" "Machine_Assign":
+	[Product_Num, Machine_Num], MA_avg_duration ~ Avg_Duration;
+read table MA;
+
+table WM "ODBC" "./WARP2011W.mdb" "Warehouse_Master":
+	WM_warehouse_num <- [Warehouse_Num], WM_capacity ~ Capacity;
+read table WM;

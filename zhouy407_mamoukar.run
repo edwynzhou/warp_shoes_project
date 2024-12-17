@@ -1,0 +1,24 @@
+#YunZhan_Zhou_zhouy407_1009948933
+#Alex_Mamoukarys_mamoukar_1010125703
+
+# Reset the environment
+reset;
+
+# Load the model and data
+model zhouy407_mamoukar.mod;
+data zhouy407_mamoukar.dat;
+
+# Customize the sovler
+option solver gurobi;
+
+# Solve the model
+solve;
+
+var integer_profit = (sum {i in PM_product_num} round(x[i]) * PM_sales_price[i]) - (sum{i in PM_product_num} round(x[i]) * sum{j in RM_num} RM_cost[j] * BOM_quantity[i, j]) - (10 * sum{i in PM_product_num} max(0, demand - round(x[i]))) - (sum{i in PM_product_num} round(x[i]) * sum{j in MM_machine_num} MM_operating_cost_per_min[j] * MA_avg_duration[i, j]) - (25 * sum{i in PM_product_num} round(x[i]) * sum{j in MM_machine_num} MA_avg_duration[i, j] / 3600);
+
+display integer_profit > zhouy407_mamoukar.out;
+display profit > zhouy407_mamoukar.out;
+
+for {i in PM_product_num} {
+	display i, round(x[i]) > zhouy407_mamoukar.out;
+}
